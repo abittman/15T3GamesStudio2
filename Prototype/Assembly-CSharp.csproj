@@ -59,6 +59,9 @@
      <Compile Include="Assets\GUI Effects\Scripts\Other Scripts\HeightResize.cs" />
      <Compile Include="Assets\GUI Effects\Scripts\Other Scripts\SpriteResizer.cs" />
      <Compile Include="Assets\GUI Effects\Scripts\Other Scripts\WidthResize.cs" />
+     <Compile Include="Assets\Hacking Minigame\HackingGameScript.cs" />
+     <Compile Include="Assets\Hacking Minigame\PreviousGuessScript.cs" />
+     <Compile Include="Assets\Hacking Minigame\StartGame.cs" />
      <Compile Include="Assets\TradingSystem\Scripts\BasicAI.cs" />
      <Compile Include="Assets\TradingSystem\Scripts\DragHandler.cs" />
      <Compile Include="Assets\TradingSystem\Scripts\Item.cs" />
