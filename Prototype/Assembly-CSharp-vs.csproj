@@ -54,6 +54,7 @@
      <Compile Include="Assets\DialogueSystem\Materials\MirrorMaterial.cs" />
      <Compile Include="Assets\DialogueSystem\RigidController.cs" />
      <Compile Include="Assets\DialogueSystem\Scripts\Billboard.cs" />
+<<<<<<< HEAD
      <Compile Include="Assets\DialogueSystem\Scripts\Bot.cs" />
      <Compile Include="Assets\DialogueSystem\Scripts\Character.cs" />
      <Compile Include="Assets\DialogueSystem\Scripts\DialogueData.cs" />
@@ -62,6 +63,9 @@
      <Compile Include="Assets\DialogueSystem\Scripts\Inventory.cs" />
      <Compile Include="Assets\DialogueSystem\Scripts\Item.cs" />
      <Compile Include="Assets\DialogueSystem\Scripts\ItemObject.cs" />
+=======
+     <Compile Include="Assets\DialogueSystem\Scripts\BillboardNPC.cs" />
+>>>>>>> origin/master
      <Compile Include="Assets\DialogueSystem\Scripts\Player.cs" />
      <Compile Include="Assets\DialogueSystem\Scripts\Quest.cs" />
      <Compile Include="Assets\DialogueSystem\Scripts\QuestLogGuiHandler.cs" />
@@ -79,6 +83,7 @@
      <Compile Include="Assets\Hacking Minigame\HackingGameScript.cs" />
      <Compile Include="Assets\Hacking Minigame\PreviousGuessScript.cs" />
      <Compile Include="Assets\Hacking Minigame\StartGame.cs" />
+<<<<<<< HEAD
      <Compile Include="Assets\SampleScenes\Menu\Scripts\EventSystemChecker.cs" />
      <Compile Include="Assets\SampleScenes\Menu\Scripts\MenuSceneLoader.cs" />
      <Compile Include="Assets\SampleScenes\Menu\Scripts\PauseMenu.cs" />
@@ -89,8 +94,13 @@
      <Compile Include="Assets\SampleScenes\Scripts\ParticleSceneControls.cs" />
      <Compile Include="Assets\SampleScenes\Scripts\PlaceTargetWithMouse.cs" />
      <Compile Include="Assets\SampleScenes\Scripts\SlowMoButton.cs" />
+=======
+     <Compile Include="Assets\Scripts\Flocking Unity\BirdController.cs" />
+     <Compile Include="Assets\Scripts\Flocking Unity\FlockController.cs" />
+>>>>>>> origin/master
      <Compile Include="Assets\TradingSystem\Scripts\BasicAI.cs" />
      <Compile Include="Assets\TradingSystem\Scripts\DragHandler.cs" />
+     <Compile Include="Assets\TradingSystem\Scripts\FSM.cs" />
      <Compile Include="Assets\TradingSystem\Scripts\Item.cs" />
      <Compile Include="Assets\TradingSystem\Scripts\SlotScript.cs" />
      <Compile Include="Assets\TradingSystem\Scripts\Timer.cs" />
