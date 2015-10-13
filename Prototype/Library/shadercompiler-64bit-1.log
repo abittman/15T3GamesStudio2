@@ -1,5 +1,5 @@
 Base path: C:/Program Files/Unity/Editor/Data
-Pipe name: \\.\pipe\UnityShaderCompiler-64bit-1-8924
+Pipe name: \\.\pipe\UnityShaderCompiler-64bit-1-9540
 Cmd: getPlatforms
 Cmd: preprocess
   insize=8687 outsize=2135 ok=1
@@ -128,3 +128,277 @@ Cmd: preprocess
   insize=698 outsize=312 ok=1
 Cmd: preprocess
   insize=5240 outsize=920 ok=1
+Cmd: preprocess
+  insize=8333 outsize=2044 ok=1
+Cmd: preprocess
+  insize=10964 outsize=662 ok=1
+Cmd: preprocess
+  error: 2 plat 16 at (35): Can't find include file CharaSkin.cg
+  insize=766 outsize=709 ok=0
+Cmd: preprocess
+  insize=1063 outsize=406 ok=1
+Cmd: preprocess
+  insize=9575 outsize=798 ok=1
+Cmd: compileSnippet
+  api=4 type=0 insize=8985 outsize=1924 kw= ok=1
+Cmd: compileSnippet
+  api=4 type=1 insize=8985 outsize=3110 kw= ok=1
+Cmd: compileSnippet
+  api=4 type=0 insize=8989 outsize=2013 kw= ok=1
+Cmd: compileSnippet
+  api=4 type=1 insize=8989 outsize=3313 kw= ok=1
+Cmd: compileSnippet
+  api=4 type=0 insize=9009 outsize=1355 kw= ok=1
+Cmd: compileSnippet
+  api=4 type=1 insize=9009 outsize=4979 kw= ok=1
+Cmd: compileSnippet
+  api=4 type=0 insize=9004 outsize=1355 kw= ok=1
+Cmd: compileSnippet
+  api=4 type=1 insize=9004 outsize=5239 kw= ok=1
+Cmd: compileSnippet
+  api=4 type=0 insize=9008 outsize=1493 kw= ok=1
+Cmd: compileSnippet
+  api=4 type=1 insize=9008 outsize=1518 kw= ok=1
+Cmd: preprocess
+  insize=1624 outsize=334 ok=1
+Cmd: preprocess
+  insize=844 outsize=330 ok=1
+Cmd: preprocess
+  insize=928 outsize=289 ok=1
+Cmd: compileSnippet
+  api=4 type=0 insize=944 outsize=1006 kw= ok=1
+Cmd: compileSnippet
+  api=4 type=1 insize=944 outsize=973 kw= ok=1
+Cmd: preprocess
+  error: 2 plat 16 at (37): Can't find include file CharaMain.cg
+  error: 2 plat 16 at (49): Can't find include file CharaOutline.cg
+  insize=1107 outsize=1014 ok=0
+Cmd: preprocess
+  insize=1923 outsize=467 ok=1
+Cmd: preprocess
+  insize=1217 outsize=387 ok=1
+Cmd: preprocess
+  insize=3521 outsize=640 ok=1
+Cmd: preprocess
+  insize=1164 outsize=384 ok=1
+Cmd: preprocess
+  error: 2 plat 16 at (40): Can't find include file frag_ao.cginc
+  error: 2 plat 16 at (44): Can't find include file frag_ao.cginc
+  error: 2 plat 16 at (48): Can't find include file frag_ao.cginc
+  error: 2 plat 16 at (52): Can't find include file frag_ao.cginc
+  error: 2 plat 16 at (57): Can't find include file frag_ao.cginc
+  insize=6511 outsize=781 ok=0
+Cmd: preprocess
+  insize=1097 outsize=289 ok=1
+Cmd: preprocess
+  insize=2413 outsize=753 ok=1
+Cmd: preprocess
+  insize=1314 outsize=362 ok=1
+Cmd: preprocess
+  insize=1353 outsize=326 ok=1
+Cmd: preprocess
+  insize=1188 outsize=255 ok=1
+Cmd: preprocess
+  insize=1344 outsize=330 ok=1
+Cmd: preprocess
+  insize=1193 outsize=303 ok=1
+Cmd: preprocess
+  insize=2235 outsize=619 ok=1
+Cmd: preprocess
+  insize=902 outsize=252 ok=1
+Cmd: preprocess
+  insize=636 outsize=302 ok=1
+Cmd: preprocess
+  insize=6131 outsize=973 ok=1
+Cmd: preprocess
+  insize=32573 outsize=255 ok=1
+Cmd: preprocess
+  insize=1154 outsize=242 ok=1
+Cmd: preprocess
+  insize=4293 outsize=504 ok=1
+Cmd: preprocess
+  insize=992 outsize=248 ok=1
+Cmd: preprocess
+  insize=4770 outsize=1779 ok=1
+Cmd: preprocess
+  insize=12787 outsize=1859 ok=1
+Cmd: preprocess
+  insize=963 outsize=333 ok=1
+Cmd: preprocess
+  insize=6023 outsize=731 ok=1
+Cmd: preprocess
+  insize=2677 outsize=761 ok=1
+Cmd: compileSnippet
+  api=4 type=0 insize=2189 outsize=1444 kw= ok=1
+Cmd: compileSnippet
+  api=4 type=1 insize=2189 outsize=949 kw= ok=1
+Cmd: compileSnippet
+  api=4 type=0 insize=2189 outsize=1444 kw= ok=1
+Cmd: compileSnippet
+  api=4 type=1 insize=2189 outsize=1176 kw= ok=1
+Cmd: compileSnippet
+  api=4 type=0 insize=2193 outsize=1444 kw= ok=1
+Cmd: compileSnippet
+  api=4 type=1 insize=2193 outsize=989 kw= ok=1
+Cmd: compileSnippet
+  api=4 type=0 insize=2192 outsize=1444 kw= ok=1
+Cmd: compileSnippet
+  api=4 type=1 insize=2192 outsize=1989 kw= ok=1
+Cmd: compileSnippet
+  api=4 type=0 insize=2195 outsize=1444 kw= ok=1
+Cmd: compileSnippet
+  api=4 type=1 insize=2195 outsize=973 kw= ok=1
+Cmd: preprocess
+  error: 1 plat 16 at (16): Both vertex and fragment programs must be present in a CGPROGRAM. Excluding it from compilation.
+  error: 1 plat 16 at (16): Warning: '// profiles' is ignored (use #pragma target instead): // profiles arbfp1
+  error: 1 plat 16 at (16): Warning: it's recommended to change '// vertex vert' to '#pragma vertex vert'
+  insize=1325 outsize=848 ok=1
+Cmd: preprocess
+  insize=10773 outsize=2532 ok=1
+Cmd: preprocess
+  error: 2 plat 16 at (34): Can't find include file CharaSkin.cg
+  insize=757 outsize=700 ok=0
+Cmd: preprocess
+  error: 2 plat 16 at (37): Can't find include file CharaMain.cg
+  error: 2 plat 16 at (49): Can't find include file CharaOutline.cg
+  insize=1113 outsize=1020 ok=0
+Cmd: preprocess
+  insize=12423 outsize=2312 ok=1
+Cmd: preprocess
+  insize=662 outsize=1578 ok=1
+Cmd: compileSnippet
+  api=4 type=0 insize=7183 outsize=3752 kw=DIRECTIONAL SHADOWS_OFF LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF ok=1
+Cmd: compileSnippet
+  api=4 type=1 insize=7183 outsize=1152 kw=DIRECTIONAL SHADOWS_OFF LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF ok=1
+Cmd: compileSnippet
+  api=4 type=0 insize=3792 outsize=2753 kw=POINT ok=1
+Cmd: compileSnippet
+  api=4 type=1 insize=3792 outsize=1883 kw=POINT ok=1
+Cmd: compileSnippet
+  api=4 type=0 insize=2950 outsize=2533 kw= ok=1
+Cmd: compileSnippet
+  api=4 type=1 insize=2950 outsize=697 kw= ok=1
+Cmd: compileSnippet
+  api=4 type=0 insize=5985 outsize=2419 kw=LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF HDR_LIGHT_PREPASS_OFF ok=1
+Cmd: compileSnippet
+  api=4 type=1 insize=5985 outsize=1136 kw=LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF HDR_LIGHT_PREPASS_OFF ok=1
+Cmd: compileSnippet
+  api=4 type=0 insize=6143 outsize=3801 kw=LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF HDR_LIGHT_PREPASS_OFF ok=1
+Cmd: compileSnippet
+  api=4 type=1 insize=6143 outsize=1444 kw=LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF HDR_LIGHT_PREPASS_OFF ok=1
+Cmd: compileSnippet
+  api=4 type=0 insize=3141 outsize=2484 kw= ok=1
+Cmd: compileSnippet
+  api=4 type=1 insize=3141 outsize=1249 kw= ok=1
+Cmd: preprocess
+  insize=1530 outsize=277 ok=1
+Cmd: preprocess
+  error: 2 plat 16 at (32): Can't find include file CharaSkin.cg
+  insize=662 outsize=605 ok=0
+Cmd: preprocess
+  insize=23968 outsize=4108 ok=1
+Cmd: preprocess
+  insize=3938 outsize=531 ok=1
+Cmd: preprocess
+  error: 2 plat 16 at (33): Can't find include file CharaSkin.cg
+  error: 2 plat 16 at (45): Can't find include file CharaOutline.cg
+  insize=870 outsize=776 ok=0
+Cmd: preprocess
+  insize=1675 outsize=280 ok=1
+Cmd: preprocess
+  insize=965 outsize=333 ok=1
+Cmd: preprocess
+  insize=1082 outsize=404 ok=1
+Cmd: preprocess
+  insize=673 outsize=248 ok=1
+Cmd: preprocess
+  insize=5564 outsize=855 ok=1
+Cmd: preprocess
+  insize=5171 outsize=737 ok=1
+Cmd: preprocess
+  insize=520 outsize=341 ok=1
+Cmd: preprocess
+  insize=6414 outsize=902 ok=1
+Cmd: preprocess
+  error: 2 plat 16 at (34): Can't find include file CharaSkin.cg
+  insize=769 outsize=712 ok=0
+Cmd: preprocess
+  insize=32583 outsize=255 ok=1
+Cmd: preprocess
+  insize=5175 outsize=1721 ok=1
+Cmd: preprocess
+  insize=6737 outsize=236 ok=1
+Cmd: preprocess
+  insize=4268 outsize=418 ok=1
+Cmd: compileSnippet
+  api=4 type=0 insize=4125 outsize=2216 kw= ok=1
+Cmd: compileSnippet
+  api=4 type=1 insize=4125 outsize=7043 kw= ok=1
+Cmd: compileSnippet
+  api=4 type=0 insize=4130 outsize=2216 kw= ok=1
+Cmd: compileSnippet
+  api=4 type=1 insize=4130 outsize=6108 kw= ok=1
+Cmd: preprocess
+  insize=4608 outsize=887 ok=1
+Cmd: preprocess
+  insize=5717 outsize=1219 ok=1
+Cmd: preprocess
+  insize=656 outsize=299 ok=1
+Cmd: preprocess
+  insize=3696 outsize=630 ok=1
+Cmd: preprocess
+  insize=799 outsize=276 ok=1
+Cmd: preprocess
+  insize=1265 outsize=272 ok=1
+Cmd: preprocess
+  insize=2015 outsize=946 ok=1
+Cmd: preprocess
+  insize=5095 outsize=700 ok=1
+Cmd: preprocess
+  insize=1017 outsize=470 ok=1
+Cmd: preprocess
+  insize=512 outsize=241 ok=1
+Cmd: preprocess
+  insize=650 outsize=290 ok=1
+Cmd: preprocess
+  insize=5006 outsize=866 ok=1
+Cmd: compileSnippet
+  api=4 type=0 insize=541 outsize=3533 kw=SHADOWS_DEPTH ok=1
+Cmd: compileSnippet
+  api=4 type=1 insize=541 outsize=453 kw=SHADOWS_DEPTH ok=1
+Cmd: compileSnippet
+  api=4 type=0 insize=3792 outsize=2753 kw=DIRECTIONAL ok=1
+Cmd: compileSnippet
+  api=4 type=1 insize=3792 outsize=1103 kw=DIRECTIONAL ok=1
+Cmd: compileSnippet
+  api=4 type=0 insize=751 outsize=3776 kw=SHADOWS_DEPTH _ALPHABLEND_ON ok=1
+Cmd: compileSnippet
+  api=4 type=1 insize=751 outsize=1233 kw=SHADOWS_DEPTH _ALPHABLEND_ON ok=1
+Cmd: compileSnippet
+  api=4 type=0 insize=982 outsize=3979 kw=DIRECTIONAL SHADOWS_OFF LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF _ALPHABLEND_ON ok=1
+Cmd: compileSnippet
+  api=4 type=1 insize=982 outsize=10585 kw=DIRECTIONAL SHADOWS_OFF LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF _ALPHABLEND_ON ok=1
+Cmd: compileSnippet
+  api=4 type=0 insize=938 outsize=4036 kw=DIRECTIONAL SHADOWS_OFF _ALPHABLEND_ON ok=1
+Cmd: compileSnippet
+  api=4 type=1 insize=938 outsize=5539 kw=DIRECTIONAL SHADOWS_OFF _ALPHABLEND_ON ok=1
+Cmd: compileSnippet
+  api=4 type=0 insize=982 outsize=3979 kw=DIRECTIONAL SHADOWS_OFF LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF _EMISSION ok=1
+Cmd: compileSnippet
+  api=4 type=1 insize=982 outsize=10772 kw=DIRECTIONAL SHADOWS_OFF LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF _EMISSION ok=1
+Cmd: compileSnippet
+  api=4 type=0 insize=982 outsize=4451 kw=DIRECTIONAL SHADOWS_SCREEN LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF FOG_EXP2 ok=1
+Cmd: compileSnippet
+  api=4 type=1 insize=982 outsize=11300 kw=DIRECTIONAL SHADOWS_SCREEN LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF FOG_EXP2 ok=1
+Cmd: compileSnippet
+  api=4 type=0 insize=982 outsize=4451 kw=DIRECTIONAL SHADOWS_SCREEN LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF FOG_EXP2 _EMISSION ok=1
+Cmd: compileSnippet
+  api=4 type=1 insize=982 outsize=11511 kw=DIRECTIONAL SHADOWS_SCREEN LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF FOG_EXP2 _EMISSION ok=1
+Cmd: compileSnippet
+  api=4 type=0 insize=982 outsize=4134 kw=DIRECTIONAL SHADOWS_OFF LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF FOG_EXP2 _ALPHABLEND_ON ok=1
+Cmd: compileSnippet
+  api=4 type=1 insize=982 outsize=11016 kw=DIRECTIONAL SHADOWS_OFF LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF FOG_EXP2 _ALPHABLEND_ON ok=1
+Cmd: compileSnippet
+  api=4 type=0 insize=1482 outsize=2038 kw=SOFTPARTICLES_ON ok=1
+Cmd: compileSnippet
+  api=4 type=1 insize=1482 outsize=1550 kw=SOFTPARTICLES_ON ok=1

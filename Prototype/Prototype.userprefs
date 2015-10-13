@@ -1,10 +1,8 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\TradingSystem\Scripts\TradeScreen.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\TradingSystem\Scripts\Item.cs">
     <Files>
-      <File FileName="Assets\TradingSystem\Scripts\ToolTipTrade.cs" Line="1" Column="1" />
-      <File FileName="Assets\TradingSystem\Scripts\ToolTip.cs" Line="48" Column="89" />
-      <File FileName="Assets\TradingSystem\Scripts\TradeScreen.cs" Line="46" Column="65" />
+      <File FileName="Assets\TradingSystem\Scripts\Item.cs" Line="20" Column="2" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
