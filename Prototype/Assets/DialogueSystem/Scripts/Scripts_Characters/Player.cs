@@ -33,7 +33,7 @@ namespace DialogueSystem {
 		void Update () {
 			if (IsMouseEnabled) {
 				Cursor.lockState = CursorLockMode.Locked;
-				Cursor.visible = false;
+				//Cursor.visible = false;
 			} else {
 				Cursor.lockState = CursorLockMode.None;
 				Cursor.visible = true;

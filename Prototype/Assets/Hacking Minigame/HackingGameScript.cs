@@ -12,6 +12,7 @@ public class HackingGameScript : MonoBehaviour
 	string codeDisplayed;
 	int guessCount = 0;
 	int rightNumberRightPosition = 0, rightNumberWrongPosition = 0 ;
+	private OpenDoor thisDoor;
 	
 	void Start ()
 	{
@@ -120,6 +121,7 @@ public class HackingGameScript : MonoBehaviour
 				}
 				if (rightNumberRightPosition == 4) {
 					//Win. Send result, delete Canvas
+					thisDoor.gameWon();
 					Debug.Log ("You win!");
 				} else {
 					PreviousGuessScript clone = Instantiate (guessRecord);
@@ -137,6 +139,7 @@ public class HackingGameScript : MonoBehaviour
 					refreshInputText ();
 					if (guessCount == 20) {
 						//Loss Send result, delete Canvas
+						thisDoor.gameLost();
 						Debug.Log ("You have lost.");
 					}
 				}
@@ -180,5 +183,7 @@ public class HackingGameScript : MonoBehaviour
 		text.text = codeDisplayed;
 	}
 
-
+	public void setDoor(OpenDoor door){
+		thisDoor = door;
+	}
 }
