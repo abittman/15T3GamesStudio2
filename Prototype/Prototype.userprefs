@@ -1,13 +1,10 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Resources\MrsJohnson.txt">
     <Files>
-      <File FileName="Assets\DialogueSystem\Scripts\Scripts_Characters\Player.cs" Line="36" Column="7" />
-      <File FileName="Assets\DialogueSystem\DoorScene\Door.cs" Line="1" Column="1" />
-      <File FileName="Assets\Resources\Steve.txt" Line="8" Column="10" />
-      <File FileName="Assets\DialogueSystem\DoorScene\OpenDoor.cs" Line="24" Column="63" />
-      <File FileName="Assets\Hacking Minigame\HackingGameScript.cs" Line="1" Column="1" />
-      <File FileName="Assets\Resources\MrsJohnson.txt" Line="47" Column="80" />
+      <File FileName="Assets\DialogueSystem\DoorScene\OpenDoor.cs" Line="27" Column="8" />
+      <File FileName="Assets\Resources\MrsJohnson.txt" Line="4" Column="1" />
+      <File FileName="Assets\Resources\Lotus.txt" Line="12" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

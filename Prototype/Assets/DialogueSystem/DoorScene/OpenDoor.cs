@@ -6,11 +6,12 @@ public class OpenDoor : MonoBehaviour
 	public Canvas minigame;
 	Canvas clone;
 	bool canOpen = true;
-	Door MyDoor;
+	Door MyDoor = null;
 	// Use this for initialization
 	void Start ()
 	{
 		minigame.GetComponent<Canvas> ();
+
 	}
 	
 	// Update is called once per frame
@@ -21,9 +22,12 @@ public class OpenDoor : MonoBehaviour
 			if (Input.GetMouseButtonDown (0)) {
 				RaycastHit MyHit;
 				if (Physics.Raycast (transform.position, transform.forward, out MyHit)) {
+					//Debug.Log("Door Hit,");
 					MyDoor = MyHit.collider.gameObject.GetComponent<Door> ();
+					//Debug.Log("MyDoor: " + MyDoor);
 					if (MyDoor) {
-						hackDoor();
+						MyDoor.ToggleDoor ();
+						//hackDoor();
 					}
 				}
 			}
@@ -32,11 +36,10 @@ public class OpenDoor : MonoBehaviour
 
 	private void hackDoor ()
 	{
+		Debug.Log ("Hacking Door");
 		canOpen = false;
 		clone = Instantiate (minigame);
-
 		clone.transform.position = new Vector3 (0, 0, 0);
-
 	}
 
 	public void gameWon ()

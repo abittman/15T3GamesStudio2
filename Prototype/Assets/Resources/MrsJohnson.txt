@@ -41,10 +41,11 @@
 
 /id 9
 	/MrsJohnson You again? I didn't think you'd have anything left to sell after last night...
-	/options 2
-	/next 10, 11
+	/options 3
+	/next 10, 11, 13
 	What? Was I here last night? I don't remember...
 	What the hell are you on about? I don't know you, I've never been here before!
+	option
 
 /id 10
 	/MrsJohnson Yeah, not surprised you don't. You came by last night and sold most of what you had. 
@@ -213,3 +214,5 @@
 	/description Go talk to Steve to see if he will give you the memory Mrs Johnson wants.
 	/items Mrs_Johnsons_Memory 1
 	/rewards Original Memory 1
+	
+
