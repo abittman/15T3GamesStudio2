@@ -14,17 +14,20 @@ public class TradeScreen : MonoBehaviour {
 	float LastSpunTime = 0f;
 	float TimeDifference = 0f;
 	bool IsSpinning = false;
-	
+
+
 	
 	// Update is called once per frame
 	void Update () {
 		if (Player == null) {
 			float DistanceToCam = Vector3.Distance (transform.position, Camera.main.transform.position);
-			if (DistanceToCam > DisableDistance)
+			if (DistanceToCam < DisableDistance){
+
+			}else{
 				Toggle (false);
-			else
-				Toggle (true);
+			}
 		} else {	// is orbitor
+			Toggle (true);
 			if (MyToggleKey != " ") {
 				KeyCode MyKey =  (KeyCode) System.Enum.Parse(typeof(KeyCode), MyToggleKey); 
 				if (Input.GetKeyDown(MyKey)) {
