@@ -21,19 +21,21 @@ namespace DialogueSystem {
 
 		// Use this for initialization
 		void Awake () {
+			if (gameObject.GetComponent<RigidbodyFirstPersonController> ()) {
 			if (!CanJump) {
-				gameObject.GetComponent<RigidController>().movementSettings.JumpForce = 0;
+				gameObject.GetComponent<RigidbodyFirstPersonController> ().movementSettings.JumpForce = 0;
 			}
 			if (!CanRun) {
-				gameObject.GetComponent<RigidController>().movementSettings.RunMultiplier = 1;
+				gameObject.GetComponent<RigidbodyFirstPersonController> ().movementSettings.RunMultiplier = 1;
 			}
+		}
 		}
 		
 		// Update is called once per frame
 		void Update () {
 			if (IsMouseEnabled) {
 				Cursor.lockState = CursorLockMode.Locked;
-				//Cursor.visible = false;
+				Cursor.visible = false;
 			} else {
 				Cursor.lockState = CursorLockMode.None;
 				Cursor.visible = true;
@@ -60,13 +62,15 @@ namespace DialogueSystem {
 		}
 		private void ToggleMouse() {
 			IsMouseEnabled = !IsMouseEnabled;
-			RigidController MyController = gameObject.GetComponent<RigidController> ();
-			if (!IsMouseEnabled) {
-				MyController.mouseLook.XSensitivity = 0;
-				MyController.mouseLook.YSensitivity = 0;
-			} else {
-				MyController.mouseLook.XSensitivity = 2;
-				MyController.mouseLook.YSensitivity = 2;
+			RigidbodyFirstPersonController MyController = gameObject.GetComponent<RigidbodyFirstPersonController> ();
+			if (MyController) {
+				if (!IsMouseEnabled) {
+					MyController.mouseLook.XSensitivity = 0;
+					MyController.mouseLook.YSensitivity = 0;
+				} else {
+					MyController.mouseLook.XSensitivity = 2;
+					MyController.mouseLook.YSensitivity = 2;
+				}
 			}
 		}
 

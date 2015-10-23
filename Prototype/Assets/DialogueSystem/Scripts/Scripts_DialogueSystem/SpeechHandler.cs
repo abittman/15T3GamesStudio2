@@ -9,36 +9,52 @@ using UnityEngine.UI;
 	MainCharacter -> Lotus etc
 	(the idea is that characters will initialize their own dialogue with anyone)
 	One of the Speech Handlers are used as the client, and the other is the server
-	
+
+	Depends on scripts:
+		Character
+		SpeechAnimator	(GuiUtilities)
+		DialogueLine	(Data Format)
+		SpeechFileReader(Static Reader)
+		List			(Unity)
 */
+
 namespace DialogueSystem {
 	public class SpeechHandler : MonoBehaviour {
-		public Text MyDialogueText;
-		private bool HasLoaded = false;	// used to check if the file has loaded - io
+		[Header("Speechness")]
+		[Tooltip("Link to a gameObject with a Text Component. If blank, this script won't work.")]
+		public Text MyDialogueText;		// used to display the text in the chat - and toggle it on/off
+		public bool IsOpen = false;	// whether the dialogue is currently opened or not
+		public bool HasLoaded = false;	// used to check if the file has loaded - io
+		public int ChattedCount = 0;			// counts how many times someone has talked to the reciever
+
 		// all the dialogue data
-		public int DialogueIndex = 0;
+		private string MyFile = "";
+		private int DialogueIndex = 0;
 		public List<DialogueLine> MyDialogues = new List<DialogueLine> ();
 		// animates the text
 		private SpeechAnimator MySpeechAnimator;
 		// true = text is animating - false = text is not animating
 		private bool CanUpdateDialogue = true;	
 		// text file name! without the .txt extension
-		public string MyFile = "";
 		// the 2 characters involved in the conversation! (more in the future)
-		public Character MyCharacter;
-		public Character MyCharacter2;
-		public bool IsActive = false;
-		// used to understand what speech handler is dictating the conversation - one initiator and one reciever
-		private bool IsFirstTalker = false;
-		// counts how many times someone has talked to the reciever
-		private int ChattedCount = 0;
+		private Character MyCharacter;	// set in /awake - attached to same gameobject as this class
+		private Character MyCharacter2;
+
+		private bool IsFirstTalker = false;		// used to understand what speech handler is dictating the conversation - one initiator and one reciever
+		private bool IsOptions = false;	// used primarily in secondary speaker, to check if its options
+		private bool IsTalking = false;
+
+		[Header("Quests")]
 		// Quests
 		// names of quests completed and given
 		public List<string> QuestsCompleted = new List<string>();	// indexes of quests completed
 		public List<string> QuestsGiven = new List<string>();	// indexes of quests completed
-
-		public bool IsTalking() {
-			return IsActive;
+		
+		public QuestLog GetMainQuestLog() {
+			return MyCharacter.gameObject.GetComponent<QuestLog>();
+		}
+		public QuestLog GetSecondaryQuestLog() {
+			return MyCharacter2.gameObject.GetComponent<QuestLog>();
 		}
 		public Character GetMainTalker() {
 			return MyCharacter;
@@ -56,8 +72,25 @@ namespace DialogueSystem {
 			MyCharacter2 = MyCharacter2_;
 		}
 
+		// empties the data
+		public void Clear() {
+			MyDialogues.Clear ();
+		}
+		public void AddDialogue(DialogueLine NewDialogue) {
+			MyDialogues.Add (NewDialogue);
+		}
+		public int DialogueSize() {
+			return MyDialogues.Count;
+		}
+
+		public bool CanTalk() 
+		{
+			return !IsTalking;
+		}
+
 		// Use this for initialization
 		void Awake () {
+			MyFile = gameObject.name;
 			MyCharacter = gameObject.GetComponent<Character> ();
 			if (MyFile != "") {
 				//SpeechData.PrintText("Loading from: " + MyFile);
@@ -65,16 +98,48 @@ namespace DialogueSystem {
 			}
 		}
 
+		// example: the player starts the conversation, second character is the npc
+		public void StartConversation(Character FirstCharacter, Character SecondCharacter) {
+			//Debug.LogError ("Inside of: " + name + " - at: " + Time.time);
+			//Debug.LogError ("Char1: " + FirstCharacter.name + " - Char2: " + SecondCharacter.name);
+			FirstCharacter.GetSpeechHandler().SetCharacter2(SecondCharacter);
+			FirstCharacter.GetSpeechHandler().SetSecondaryTalker();
+			FirstCharacter.GetSpeechHandler ().IsTalking = true;
+
+			SetCharacter2(FirstCharacter);
+			ToggleSpeech (true, false);
+			SetMainTalker();
+			Activate ();
+		}
+		// begins the chat, resets everything
 		public void Activate() {
+			IsTalking = true;
 			DialogueIndex = 0;
-			IsActive = true;
+			IsOpen = true;
 			MyDialogueText.gameObject.GetComponent<Text> ().text = "";
 			CheckForEmptyDialogue();
 			UpdateSpeech ();
 		}
+		// ends the chat
+		public void ExitChat() {
+			IsTalking = false;
+			IsOpen = false;
+			ToggleSpeech (false);
+			ResetAll ();
+			ChattedCount++;
+			MyCharacter.OnEndDialogue();
+			MyCharacter2.OnEndDialogue();
+			MyCharacter2.GetSpeechHandler ().IsTalking = false;
+		}
+		public bool HasOptions() {
+			if (IsFirstTalker)
+				return (!GetCurrentDialogue ().HasOptions ());
+			else
+				return !IsOptions;
+		}
 		void Update() {
-			if (IsActive) {
-				if (Input.GetKeyDown (KeyCode.Space)) {
+			if (IsOpen) {
+				if (HasOptions() && Input.GetKeyDown (KeyCode.Space)) {
 					NextLine ();
 				}
 				if (Input.GetKeyDown (KeyCode.E)) {
@@ -86,46 +151,30 @@ namespace DialogueSystem {
 
 		}
 
-		public void ExitChat() {
-			IsActive = false;
-			ToggleSpeech (false);
-			ResetAll ();
-			ChattedCount++;
-			MyCharacter.OnEndDialogue();
-			MyCharacter2.OnEndDialogue();
-		}
 
 		public void ResetAll() {
 			DialogueIndex = 0;
 			MyDialogueText.text = "";
 		}
 		public void NextLine() {
-			NextLine (0, false);
+			NextLine (0);
 		}
+
 		public void NextLine(int Value) {
-			NextLine (Value, true);
-		}
-		public void NextLine(int Value, bool IsOption) {
 			//Debug.LogError ("Next line beg : " + IsActive + " : " + gameObject.name);
 			if (!IsFirstTalker) {
-				MyCharacter2.MySpeechBubble.CanUpdateDialogue = CanUpdateDialogue;
-				MyCharacter2.MySpeechBubble.NextLineDo(Value, IsOption);
+				MyCharacter2.GetSpeechHandler().CanUpdateDialogue = CanUpdateDialogue;
+				MyCharacter2.GetSpeechHandler().NextLineDo(Value);
 			} else {
-				NextLineDo(Value, IsOption);
+				NextLineDo(Value);
 			}
 		}
 		
-		public void NextLineDo(int Value, bool IsOption) 
+		public void NextLineDo(int Value) 
 		{
 			if (CanUpdateDialogue)
 			if (MyDialogues.Count > 0 && DialogueIndex < MyDialogues.Count) {
-				{
 					DialogueLine MyDialogueLine = GetCurrentDialogue ();
-					if (MyDialogueLine.RespondType != ResponseType.Next && !IsOption)
-						return;
-					//Debug.LogError ("Nextline doing : " + DialogueIndex);
-					// quests
-					//Debug.LogError("Adding quest: " + QuestIndex);
 					if (IsFirstTalker) 
 					{
 						// reciever gives the quest to the initiator - i.e. player recieves the quest off the npc
@@ -134,20 +183,20 @@ namespace DialogueSystem {
 							if (MyCharacter)
 							{
 								//int QuestIndex = MyDialogueLine.QuestIndex;
-								string QuestName = MyCharacter.GiveCharacterQuest(MyDialogueLine.QuestName, MyCharacter2);
+							string QuestName = GetMainQuestLog().GiveCharacterQuest(MyDialogueLine.QuestName, GetSecondaryQuestLog());
 								if (QuestName != "") 
 								{
 									QuestsGiven.Add(QuestName);
 								}
 							}
-						} 
+						}
 						// checking from recieving speech handler - handing the quest in
 						else if (MyDialogueLine.IsQuestCheck)
 						{
 							if (MyCharacter2) 
 							{
 								//string QuestName = MyCharacter.MyQuests[MyDialogueLine.QuestIndex].Name;
-								int MyQuestCompletedIndex = MyCharacter2.RemoveQuest(MyDialogueLine.QuestName, MyCharacter);
+								int MyQuestCompletedIndex = GetSecondaryQuestLog().RemoveQuest(MyDialogueLine.QuestName, MyCharacter);
 								if (MyQuestCompletedIndex != -1) 
 								{
 									QuestsCompleted.Add(MyDialogueLine.QuestName);
@@ -161,14 +210,13 @@ namespace DialogueSystem {
 							return;
 						}
 						QuestsGiven.Clear();
-						for (int i = 0; i < MyCharacter2.MyQuests.Count; i++) {
-							QuestsGiven.Add (MyCharacter2.MyQuests[i].Name);
+						for (int i = 0; i < GetSecondaryQuestLog().MyQuests.Count; i++) {
+							QuestsGiven.Add (GetSecondaryQuestLog().MyQuests[i].Name);
 						}
 					}
 					DialogueIndex = MyDialogueLine.GetNextLine ((ChattedCount == 0), Value, QuestsGiven, QuestsCompleted);
 					CheckForEmptyDialogue(Value);
 					UpdateSpeech ();
-				}
 			}
 		}
 
@@ -207,18 +255,23 @@ namespace DialogueSystem {
 				if (NewDialogue.IsReverseSpeech())
 				{
 					ToggleSpeech(false, true);
-					MyCharacter2.MySpeechBubble.MyDialogueText.GetComponent<SpeechAnimator> ().NewLine (NewDialogue.GetReverseSpeechDialogue(ChattedCount == 0));
-					MyCharacter2.MySpeechBubble.DeactivateChildren ();
-					MyCharacter2.MySpeechBubble.AddAnimationListener();
-					MyCharacter2.MySpeechBubble.CanUpdateDialogue = false;
+					MyCharacter2.GetSpeechHandler().MyDialogueText.GetComponent<SpeechAnimator> ().NewLine (NewDialogue.GetReverseSpeechDialogue(ChattedCount == 0));
+					MyCharacter2.GetSpeechHandler().DeactivateChildren ();
+					MyCharacter2.GetSpeechHandler().AddAnimationListener();
+					MyCharacter2.GetSpeechHandler().CanUpdateDialogue = false;
 				} else {
 					ToggleSpeech(true, false);
 					MyDialogueText.gameObject.GetComponent<SpeechAnimator> ().NewLine (NewDialogue.GetSpeechDialogue(ChattedCount == 0));
 					DeactivateChildren ();
 					// this way the handler knowns when the text has finished animation - stops skipping to next line
-					MyDialogueText.gameObject.GetComponent<SpeechAnimator> ().OnFinishedAnimationFunction.AddListener(UpdateRespondType);
+					AddAnimationListener();
+					//MyDialogueText.gameObject.GetComponent<SpeechAnimator> ().OnFinishedAnimationFunction.AddListener(UpdateRespondType);
 					CanUpdateDialogue = false;
 				}
+				if (NewDialogue.ReverseDialogueLines.Count > 1)
+					MyCharacter2.GetSpeechHandler().IsOptions = true;
+				else
+					MyCharacter2.GetSpeechHandler().IsOptions = false;
 			}
 		}
 
@@ -236,48 +289,93 @@ namespace DialogueSystem {
 			if (MyCharacterLabel != null) {
 				MyCharacterLabel.gameObject.SetActive(!IsSpeech);
 			}
-			IsActive = IsSpeech;
-			
+			IsOpen = IsSpeech;
+			ToggleSpeechBubble2 (IsSpeech2);
+		}
+
+		public void ToggleSpeechBubble2(bool IsSpeech2) {
 			if (MyCharacter2) {
-				MyCharacter2.MySpeechBubble.IsActive = IsSpeech2;
-				MyCharacter2.MySpeechBubble.MyCharacter2 = MyCharacter;
-				MyCharacter2.MySpeechBubble.MyDialogueText.gameObject.transform.parent.gameObject.SetActive (IsSpeech2);
-				Transform MyCharacterLabel2 = MyCharacter2.MySpeechBubble.MyDialogueText.transform.parent.parent.FindChild ("Label");
+				MyCharacter2.GetSpeechHandler().IsOpen = IsSpeech2;
+				MyCharacter2.GetSpeechHandler().MyCharacter2 = MyCharacter;
+				MyCharacter2.GetSpeechHandler().MyDialogueText.gameObject.transform.parent.gameObject.SetActive (IsSpeech2);
+				Transform MyCharacterLabel2 = MyCharacter2.GetSpeechHandler().MyDialogueText.transform.parent.parent.FindChild ("Label");
 				if (MyCharacterLabel2 != null) {
 					MyCharacterLabel2.gameObject.SetActive (!IsSpeech2);
 				}
 			}
 		}
-
+		// called at the end of animating text
 		private void UpdateRespondType() {
 			//Debug.LogError ("Finished animating text.");
-			UpdateRespondType(GetCurrentDialogue());
+			if (IsFirstTalker)
+				UpdateRespondType (GetCurrentDialogue ());
+			else {
+				MyDialogueText.gameObject.transform.FindChild ("NextButton").gameObject.SetActive (true);
+				CanUpdateDialogue = true;
+			}
 		}
 
 		// handles the various setups for responses
 		private void UpdateRespondType(DialogueLine NewDialogue) {
+			float BubbleWidth = 100f*1.4f;
+			float BubbleHeight = 100f*1.4f;
+			RectTransform MyRect = MyDialogueText.GetComponent <RectTransform> ();
+
 			DeactivateChildren ();
-			switch (NewDialogue.RespondType){
-			case(ResponseType.Next):
+
+			if (NewDialogue.ReverseDialogueLines.Count <= 1) 
+			{
 				MyDialogueText.gameObject.transform.FindChild("NextButton").gameObject.SetActive(true);
-				break;
-			case(ResponseType.YesNo):
-				MyDialogueText.gameObject.transform.FindChild("YesButton").gameObject.SetActive(true);
-				MyDialogueText.gameObject.transform.FindChild("NoButton").gameObject.SetActive(true);
-				break;
-			case(ResponseType.Options4):
-				for (int i = 0; i < NewDialogue.MyResponseLines.Count; i++) {
-					MyDialogueText.gameObject.transform.FindChild("Option"+(i+1)).gameObject.SetActive(true);
-					MyDialogueText.gameObject.transform.FindChild("Option"+(i+1)).gameObject.transform.GetChild(0).gameObject.GetComponent<Text>().text = NewDialogue.MyResponseLines[i];
+			}
+			else
+			{
+				ToggleSpeechBubble2(true);
+				MyCharacter2.GetSpeechHandler().MyDialogueText.GetComponent<SpeechAnimator> ().NewLine (NewDialogue.GetTotalReverseText());
+				for (int i = 0; i < NewDialogue.ReverseDialogueLines.Count; i++) 
+				{
+					GameObject MyBlockThing = MyCharacter2.GetSpeechHandler().MyDialogueText.transform.FindChild("BlockThing" + i).gameObject;
+					MyBlockThing.SetActive(true);
+					//.MyBlockThing.GetComponent<RawImage>().color = Color.grey;
+					MyBlockThing.GetComponent<RawImage>().color = new Color32((byte)(Color.grey.r), 
+					                                                          (byte)(Color.grey.g), 
+					                                                          (byte)(Color.grey.b), 
+					                                                          80);
+
+					GameObject NewChild = new GameObject();
+					NewChild.name = "Option"+(i);
+
+					RawImage MyImage = NewChild.AddComponent<RawImage>();
+
+					Button MyButton = NewChild.AddComponent<Button>();
+					MyButton.targetGraphic = MyImage;
+					ColorBlock MyColors = MyButton.colors;
+					MyColors.normalColor = Color.grey;
+					MyColors.highlightedColor = Color.cyan;
+					MyColors.pressedColor = Color.green;
+					MyButton.colors = MyColors;
+					int Blarg = i;
+					MyButton.onClick.AddListener( () =>{ 
+						//Debug.LogError("......Gah.");
+						NextLine(Blarg);
+					});
+					NewChild.transform.position = MyDialogueText.transform.position; 
+					NewChild.transform.rotation = Quaternion.identity;	//MyDialogueText.transform.rotation;
+					NewChild.transform.localScale = MyDialogueText.transform.localScale;
+					Vector3 OffsetPosition = new Vector3(-MyRect.GetSize().x/4f + i*BubbleWidth*2f, -MyRect.GetSize().y/2f-BubbleHeight/2f,0.3f);
+					NewChild.transform.position += OffsetPosition;
+					NewChild.transform.SetParent(MyDialogueText.transform, false);
 				}
-				break;
 			}
 			CanUpdateDialogue = true;
 		}
 
 		private void DeactivateChildren() {
 			for (int i = 0; i < MyDialogueText.gameObject.transform.childCount; i++) {
-				MyDialogueText.gameObject.transform.GetChild(i).gameObject.SetActive(false);
+				GameObject ChildGameObject = MyDialogueText.gameObject.transform.GetChild(i).gameObject;
+				if (ChildGameObject.name.Contains("Option"))
+					Destroy (ChildGameObject);
+				else
+					MyDialogueText.gameObject.transform.GetChild(i).gameObject.SetActive(false);
 			}
 		}
 	}

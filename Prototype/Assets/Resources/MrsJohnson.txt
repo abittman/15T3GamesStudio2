@@ -4,26 +4,23 @@
 	/first 9
 	
 /id 2
-	/checkquest
+	/checkquest Recover Mrs Johnson's memory
 	/next 34, 8, 3
 	
 /id 3
 	/MrsJohnson Back again, you remember everything this time?
-	/options 2
 	/next 4, 5
 	Ha ha, very funny. I've got your memory, now give me back mine
 	*Glares* Yes, plus I got your memory, I think you owe me something now
 
 /id 4
 	/MrsJohnson Fair enough, I've only got the one, hopefully it'll tell you more about why you sold them to me in the first place.
-	/options 2
 	/next 6, 7
 	Any idea where I should start looking?
 	Thanks, I'll see you around
 
 /id 5
 	MrsJohnson Yes I do, here it is, one memory. Hopefully this will help you get the rest of them back, or at least help you find out why you sold them.
-	/options 1
 	/next 7
 	Thanks, I'll see you around
 
@@ -41,22 +38,19 @@
 
 /id 9
 	/MrsJohnson You again? I didn't think you'd have anything left to sell after last night...
-	/options 3
 	/next 10, 11, 13
 	What? Was I here last night? I don't remember...
 	What the hell are you on about? I don't know you, I've never been here before!
-	option
+	WHATTT???
 
 /id 10
 	/MrsJohnson Yeah, not surprised you don't. You came by last night and sold most of what you had. 
-	/options 2
-	/next 12, 13 
+	/next 12, 13
 	Sold? What did I sell?
 	Sold? How much did I make?
 
 /id 11
 	/MrsJohnson Well, I'm not surprised that you don't remember, what with all you gave last night, the attitudes new though...
-	/options 3
 	/next 14, 15, 16
 	What are you on about?
 	Sorry, I just don't remember anything from before this morning
@@ -64,132 +58,107 @@
 
 /id 12
 	/MrsJohnson Your memories, my friend.
-	/options 1
 	/next 17
 	My memories? How is that possible?
 
 /id 13
 	/MrsJohnson Asking the important questions, as always. You sold everything you had, made a pretty penny out of it too.
-	/options 1
 	/next 18
 	I don't seem to have any of it left
 
 /id 14
 	/MrsJohnson Wow, never seen someone this out of it after selling their memories, I guess this happens after you sell all of them.
-	/options 1
 	/next 19 
 	How is this possible?
 
 /id 15
 	/MrsJohnson It's alright, its not everyday you sell all of your memories, I'm not surprised it left you a bit cranky this morning.
-	/options 1
 	/next 17
 	My memories? How is that possible?
 
 /id 16
-	/MrsJohnson Ok, relax buddy.
-	Look, last night you came to me and sold all of your memories, made a fair bit of money too, I guess you're missing that part too though.
-	/options 2
+	/MrsJohnson Ok, relax buddy. Look, last night you came to me and sold all of your memories, made a fair bit of money too, I guess you're missing that part too though.
 	/next 17, 20
 	My memories? How is that possible?
 	Ok then, I'll be taking them back now.
 
 /id 17
 	/MrsJohnson How do you not know, did you lose your... oh right...
-	/options 1
 	/next 21
 	…
 
 /id 18
 	/MrsJohnson Must have had one hell of a night afterwards. Shame you can't remember that either.
-	/options 1
 	/next 22
 	How do you know I can't remember anything?
 
 /id 19
-	/MrsJohnson What, you been living under a rock for all these years?
-	Oh right, the memory selling...
-	/options 1
+	/MrsJohnson What, you been living under a rock for all these years? Oh right, the memory selling...
 	/next 21
 	…
 
 /id 20
 	/MrsJohnson Hey, no can do buddy. Even if I did refunds, sold all of em before you got here. Well all but one.
-	/options 2
 	/next 23, 24
 	Ok, I'll BUY them back!
 	Give it to me! Now!
 
 /id 21
-	/Right, where to start?
-	I guess I'll dive right in.
-	/options 1
+	/MrsJohnson Right, where to start? I guess I'll dive right in.
 	/next 25
 	Go on
 
 /id 22
-	/You sold me all of your memories last night, guess you don't remember.
-	/options 2
+	/MrsJohnson sold me all of your memories last night, guess you don't remember.
 	/next 26, 27
 	I guess not.
 	Well if I sold all of them it would make it hard to remember
 
 /id 23
 	/MrsJohnson It seems like you don't have the money to buy it back.
-	/options 1
 	/next 28
 	Damn…
 
 /id 24
-	/MrsJohnson Well when you ask nicely like that...
-	Besides, I only have one left.
-	/options 1
+	/MrsJohnson Well when you ask nicely like that... Besides, I only have one left.
 	/next 23
 	Ok, I'll BUY them back!
 
 /id 25
 	/MrsJohnson Some people are born with the power to interact with other peoples minds, no one knows what makes people have this gift. These people can take a persons memories or give memories to a person. After a while, people like me used this gift to take memories from people like you.
-	/options 2
 	/next 29, 30
 	People like me?
 	Oh I get it, those with nothing to lose...
 
 /id 26
 	/MrsJohnson Must seem strange, waking up with no memory...
-	/options 2
 	/next 31, 19
 	So could I buy back my memories?
 	How is this possible?
 
 /id 27
-	MrsJohnson Huh, guess you're right...
-	/options 1
+	/MrsJohnson Huh, guess you're right...
 	/next 31
 	So could I buy back my memories?
 
 /id 28
 	/MrsJohnson Well listen, don't go telling anyone about what I'm about to do for you, there's this person, you with me? Got something I want and I got something you want, ya get me?
-	/options 2
 	/next 32, 33
 	Yeah yeah, I get you. Ill be back with the memory you want.
 	Can't say that I do
 
 /id 29
 	/MrsJohnson You know, people who need cash fast, or those who'd rather forget something.
-	/options 1
 	/next 31
 	So could I buy back my memories?
 
 /id 30
 	/MrsJohnson Exactly, sometimes a pocket full of cash is better then something you'd rather forget anyway...
-	/options 1
 	/next 31
 	So could I buy back my memories?
 
 /id 31
-	/MrsJohnson Sorry buddy, sold all but one.
-	Besides, you don't seem to have any money on you.
-	/options 1
+	/MrsJohnson Sorry buddy, sold all but one. Besides, you don't seem to have any money on you.
 	/next 28
 	Damn…
 
@@ -201,7 +170,6 @@
 /id 33
 	/MrsJohnson *sigh*
 	Go meet with Steve, get him to give you the memory I'm after, comeback here and I'll give you back your memory.
-	/options 1
 	/next 32
 	Oh, I get it now
 	
@@ -209,8 +177,8 @@
 	/MrsJohnson Good Luck find the rest of your memories!
 	/exit
 	
-/quest 1
-	/title Get Mrs Johnson's memory from Steve
+/quest Recover Mrs Johnson's memory
+	/title Recover Mrs Johnson's memory
 	/description Go talk to Steve to see if he will give you the memory Mrs Johnson wants.
 	/items Mrs_Johnsons_Memory 1
 	/rewards Original Memory 1

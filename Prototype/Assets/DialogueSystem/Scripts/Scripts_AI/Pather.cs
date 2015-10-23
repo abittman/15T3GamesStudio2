@@ -23,7 +23,7 @@ namespace AISystem {
 
 		public void OnReachTarget() {
 			if (PathPoints.Count > 0) {
-				Debug.LogError("Has reached new position");
+				Debug.Log(PathIndex + " - Has reached new position: " + Time.time);
 				PathIndex++;
 				if (PathIndex >= PathPoints.Count) 
 					PathIndex = 0;

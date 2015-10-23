@@ -196,7 +196,7 @@ public class BasicAI : FSM {
 	}
 	public void Toggle(bool IsEnabled) {
 		transform.Find ("SpeechCanvas").gameObject.transform.Find ("Main").gameObject.SetActive (IsEnabled);
-		transform.Find ("SpeechCanvas").GetComponent<BillboardNPC>().tradingNpc = IsEnabled;
+		//transform.Find ("SpeechCanvas").GetComponent<BillboardNPC>().tradingNpc = IsEnabled;
 	}
 
 

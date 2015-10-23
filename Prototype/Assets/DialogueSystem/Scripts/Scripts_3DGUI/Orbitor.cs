@@ -4,7 +4,8 @@ using System.Collections;
 namespace GUI3D {
 	public class Orbitor : MonoBehaviour {
 		public GameObject TargetCharacter;
-		public string MyFollowKey = " ";
+		public string MyFollowPositionKey = " ";
+		public string MyFollowCameraKey = " ";
 		public Vector3 MyDirection;
 		public float MyDisplayDistance = 2f;
 		float TargetAngleX;
@@ -28,8 +29,11 @@ namespace GUI3D {
 		// Update is called once per frame
 		void Update () {
 			UpdateOrbit ();
-			if (GUI3DUtilities.IsKeyDown (MyFollowKey)) {
+			if (GUI3DUtilities.IsKeyDown (MyFollowPositionKey)) {
 				IsActive = !IsActive;
+			}
+			if (GUI3DUtilities.IsKeyDown (MyFollowCameraKey)) {
+				IsFollowUserAngleAddition = !IsFollowUserAngleAddition;
 			}
 		}
 

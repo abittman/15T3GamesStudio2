@@ -14,7 +14,7 @@ namespace DialogueSystem {
 		public static bool ReadDialogue(string FileName, SpeechHandler NewSpeech) {
 			bool HasLoaded = false;
 			List<string> MyLines = new List<string>();
-			NewSpeech.MyDialogues.Clear ();
+			NewSpeech.Clear ();
 			string CharacterName = FileName;
 			//if (!FileName.Contains (".txt"))
 			//	FileName += ".txt";
@@ -45,9 +45,9 @@ namespace DialogueSystem {
 			if (MyLines.Count > 0) {
 				HasLoaded = true;
 			}
-			NewSpeech.MyFile = TemporaryFileName;
+			//NewSpeech.MyFile = TemporaryFileName;
 			LoadFile (CharacterName, NewSpeech, MyLines);
-			NewSpeech.MyFile = CharacterName;
+			//NewSpeech.MyFile = CharacterName;
 			return HasLoaded;
 		}
 		public static void PrintText(string MyText) {
@@ -60,47 +60,62 @@ namespace DialogueSystem {
 			List<string> SavedData = new List<string> ();//used to break up commands
 			bool IsReadingID = false;
 			bool IsReadingQuest = false;
-			
+			bool IsReadingItem = false;
+			QuestLog MyQuestLog = null;
+			if (NewSpeech.GetMainTalker ())
+				MyQuestLog = NewSpeech.GetMainTalker ().gameObject.GetComponent<QuestLog> ();
 			for (int i = 0; i < MyLines.Count; i++) {
 				string line = MyLines[i];
 				if (ContainsMainTag(line)) {
 					if (IsReadingID) {
 						//Debug.LogError("Adding new dialog! at line: " + line);
-						DialogueLine NewDialogue = new DialogueLine(SavedData, NewSpeech.MyDialogues.Count+1, CharacterName);
-						NewSpeech.MyDialogues.Add (NewDialogue);
+						DialogueLine NewDialogue = new DialogueLine(SavedData, NewSpeech.DialogueSize()+1, CharacterName);
+						NewSpeech.AddDialogue (NewDialogue);
 					} else if (IsReadingQuest) {
+						if (MyQuestLog) {
 						Quest NewQuest = new Quest (SavedData);
-						//Debug.LogError("Adding new quest: " + NewQuest.Name);
+						MyQuestLog.AddQuest(NewQuest);
+						}
+					} else if (IsReadingItem) {
+						Item NewItem = new Item (SavedData);
 						if (NewSpeech.GetMainTalker())
-							NewSpeech.GetMainTalker().AddQuest(NewQuest);
-						else
-							Debug.LogError("No main talker in conversation: " + NewSpeech.name);
+							NewSpeech.GetComponent<Inventory>().AddItem(NewItem);
 					}
 					SavedData.Clear();
-					IsReadingID = (line.Contains ("/id"));
-					IsReadingQuest =(line.Contains ("/quest"));
+					IsReadingID = (line.Contains ("/id "));
+					IsReadingQuest =(line.Contains ("/quest "));
+					IsReadingItem = (line.Contains ("/item "));
+					if (IsReadingItem || IsReadingQuest) {
+						SavedData.Add (line);
+						//Debug.LogError("AED" + IsReadingItem);
+					}
 				}
 				else {
 					SavedData.Add (line);
 				}
 			}
 			if (IsReadingID ) {
-				DialogueLine NewDialogue = new DialogueLine(SavedData, NewSpeech.MyDialogues.Count+1, CharacterName);
-				NewSpeech.MyDialogues.Add (NewDialogue);
+				DialogueLine NewDialogue = new DialogueLine(SavedData, NewSpeech.DialogueSize()+1, CharacterName);
+				NewSpeech.AddDialogue (NewDialogue);
 			}
-			if (IsReadingQuest) {
+			if (IsReadingQuest && MyQuestLog) {
 				Quest NewQuest = new Quest (SavedData);
-				NewSpeech.GetMainTalker().MyQuests.Add (NewQuest);
+				MyQuestLog.MyQuests.Add (NewQuest);
+			}
+			if (IsReadingItem) {
+				Item NewItem = new Item (SavedData);
+				if (NewSpeech.GetMainTalker())
+					NewSpeech.GetComponent<Inventory>().AddItem(NewItem);
 			}
 		}
 
 		public static bool ContainsMainTag(string Line) {
-			return (Line.Contains ("/id") || Line.Contains ("/quest"));
+			return (Line.Contains ("/id ") || Line.Contains ("/quest ") || Line.Contains ("/item "));
 		}
 		public static bool IsEmptyLine(string MyLine) {
 			bool IsEmpty = true;
 			for (int k = 0; k < MyLine.Length; k++) {
-				if (MyLine[k] != ' ' && MyLine[k] != '\n' && (int)(MyLine[k]) != 13)
+				if (MyLine[k] != ' ' && MyLine[k] != '\n' && (int)(MyLine[k]) != 13 && MyLine[k] != '\t')
 				{
 					return false;
 				}

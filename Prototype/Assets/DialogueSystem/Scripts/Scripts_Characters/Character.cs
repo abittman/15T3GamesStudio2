@@ -15,127 +15,95 @@ using AISystem;
 
 namespace DialogueSystem {
 	public class Character : MonoBehaviour {
-		public bool IsRayTrace = false;
+		[Header("Raycasting")]
+		[Tooltip("Used for interaction between character and other objects. Keep blank if using it's own transform.forward vector for ray casts.")]
 		public Transform MyRayObject = null;
-		public List<Quest> MyQuests = new List<Quest>();
-		public SpeechHandler MySpeechBubble;
-		public QuestLogGuiHandler MyQuestLogGui;
+		[Tooltip("Chose the layers that you want to be able to interact with.")]
+		public LayerMask MyLayer;
+		private SpeechHandler MySpeechBubble;
+		[Header("Speech")]
+		[Tooltip("These functions are called when dialogue begins!")]
+		public UnityEngine.Events.UnityEvent OnBeginTalking;
+		[Tooltip("These functions are called when dialogue ends!")]
+		public UnityEngine.Events.UnityEvent OnEndTalking;
+		
+		[Header("Sounds")]
+		private AudioSource MySource;
+		[Tooltip("Played when dialogue begins")]
+		public AudioClip OnBeginTalkingSound;
+		[Tooltip("Played when dialogue ends")]
+		public AudioClip OnEndTalkingSound;
 
 		// Use this for initialization
 		void Awake () {
+			MySource = gameObject.GetComponent<AudioSource> ();
+			if (MySource == null)
+				MySource = gameObject.AddComponent<AudioSource> ();
+			// Grab my speech handler!
 			MySpeechBubble = gameObject.GetComponent <SpeechHandler> ();
 			if (MySpeechBubble != null) {
 				MySpeechBubble.MyDialogueText.gameObject.transform.parent.gameObject.SetActive (false);
 				MySpeechBubble.SetCharacter(this);
-				name = MySpeechBubble.MyFile;
 			}
+
+			// Title gui
 			Transform MyCharacterLabel = MySpeechBubble.MyDialogueText.transform.parent.parent.FindChild ("Label");
 			if (MyCharacterLabel != null) {
 				MyCharacterLabel.gameObject.transform.GetChild(0).gameObject.GetComponent<Text>().text = name;
 			}
 		}
-		public void AddQuest(Quest NewQuest) {
-			NewQuest.QuestGiver = this;
-			if (!MyQuests.Contains(NewQuest))
-				MyQuests.Add (NewQuest);
-		}
 
-		public string GiveCharacterQuest(string QuestName, Character MyQuestTaker) {
-			int QuestIndex = -1;
-			for (int i = 0; i < MyQuests.Count; i++) {
-				if (MyQuests[i].Name == QuestName) {
-					QuestIndex = i;
-					i = MyQuests.Count;
-				}
-			}
-			if (QuestIndex == -1)
-				return "!";
+		// Interfacing with dialogue/speech handler
 
-			if (QuestIndex < MyQuests.Count && QuestIndex >= 0) {
-				Quest NewQuest = MyQuests [QuestIndex];
-				if (!MyQuestTaker.MyQuests.Contains (NewQuest)) {
-					MyQuestTaker.MyQuests.Add (NewQuest);
-					//Debug.LogError("Adding quest: " + MyCharacter.MyQuests[QuestIndex].Name);
-					if (MyQuestTaker.MyQuestLogGui) {
-						MyQuestTaker.MyQuestLogGui.AddQuestGui (NewQuest.Name);
-					}
-					NewQuest.QuestGiver = this;
-					NewQuest.QuestTaker = MyQuestTaker;
-					MyQuestTaker.CheckQuestComplete();
-					return NewQuest.Name;
-				}
-			}
-			return "";
-		}
-
-		public int RemoveQuest(string QuestName, Character MyQuestGiver) {
-			{
-				//if (QuestIndex < MyQuests.Count && QuestIndex >= 0) {
-				//	QuestIndex = -1;
-				int QuestIndex = -1;
-				for (int i = 0; i < MyQuests.Count; i++) {
-					if (MyQuests[i].Name == QuestName) {
-						QuestIndex = i;
-						i = MyQuests.Count;
-					}
-				}
-				// if no quest of same name found
-				if (QuestIndex == -1)
-					return -1;
-				Quest MyQuest = MyQuests[QuestIndex];
-				if (MyQuest.IsCompleted) {
-					//Debug.LogError (name + " Removeing quest: " + QuestIndex);
-					MyQuests.RemoveAt (QuestIndex);
-					MyQuestLogGui.RemoveQuest(QuestIndex);
-					return QuestIndex;
-				}
-			}
-			return -1;
+		public SpeechHandler GetSpeechHandler() {
+			return MySpeechBubble;
 		}
 
 		public void BeginDialogue(Character ConversationStarter) {
 			// Now have speech bubbles pop up
-			if (!MySpeechBubble.IsActive) {
-				if (gameObject.GetComponent<Wander>()) {
+			if (MySpeechBubble.CanTalk() && ConversationStarter.GetSpeechHandler().CanTalk()) 
+			{
+				/*if (gameObject.GetComponent<Wander>()) {
 					gameObject.GetComponent<Wander>().ToggleWander(false);
 					gameObject.GetComponent<Movement>().LookAt(ConversationStarter.gameObject);
-				}
-				ConversationStarter.MySpeechBubble.SetCharacter2(this);
-				ConversationStarter.MySpeechBubble.SetSecondaryTalker();
-				MySpeechBubble.SetCharacter2(ConversationStarter);
-				MySpeechBubble.ToggleSpeech (true, false);
-				MySpeechBubble.SetMainTalker();
-				MySpeechBubble.Activate ();
-				/*if (gameObject.GetComponent<FaceUpdate>()) 
-				{
-					gameObject.GetComponent<FaceUpdate>().SetAnimation(3);
 				}*/
+				MySpeechBubble.StartConversation(ConversationStarter, this);
+
+				OnBeginTalking.Invoke();
+				if (OnBeginTalkingSound != null)
+					MySource.PlayOneShot (OnBeginTalkingSound);
 			}
 		}
 
 		public void OnEndDialogue() {
-			if (gameObject.GetComponent<Wander>()) {
-				gameObject.GetComponent<Wander>().ToggleWander(true);
-			}
+			OnEndTalking.Invoke ();
+			if (OnEndTalkingSound != null)
+				MySource.PlayOneShot (OnEndTalkingSound);
 		}
 
 
 		public void EndTalk(Character ConversationStarter) {
 			MySpeechBubble.ToggleSpeech (false);
 		}
+
+
+	// Ray trace stuff
 		// Raytraces, checks for character or item
 		public bool RayTrace() {
 			//Debug.LogError ("RayTracing");
 			if (MyRayObject == null)
 				MyRayObject = gameObject.transform;
+
+			//var layerMask = 1 << 2; layerMask = ~layerMask;
+
 			RaycastHit MyHit;
-			if (Physics.Raycast (MyRayObject.position, MyRayObject.forward, out MyHit, 5)) {
+			if (Physics.Raycast (MyRayObject.position, MyRayObject.forward, out MyHit, 5, MyLayer)) {
 				//Debug.LogError("RayHit");
 				Character HitCharacter = MyHit.collider.gameObject.GetComponent<Character>();
 				if (HitCharacter != null) {
 					//Debug.LogError("HitCharacter!");
 					// now initialize that characters dialogue system with (MainCharacter->Lotus dialogue file)
-					if (!MySpeechBubble.IsTalking()) {
+					if (MySpeechBubble.CanTalk()) {
 						HitCharacter.BeginDialogue(this);
 					}
 					return true;
@@ -154,18 +122,12 @@ namespace DialogueSystem {
 
 					HitItemObject.Pickup();	// does things like destroy, activates the special function
 					// add a value to statistics! for things 
-					CheckQuestComplete();
+					if (gameObject.GetComponent<QuestLog>())
+						gameObject.GetComponent<QuestLog>().RefreshQuestsGui();
 					return true;
 				}
 			}
 			return false;
-		}
-		public void CheckQuestComplete() {
-			for (int i = 0; i < MyQuests.Count; i++) {
-				MyQuests[i].CheckCompleted(this);
-			}
-			if (MyQuestLogGui)
-				MyQuestLogGui.CheckQuestCompletitions();
 		}
 	}
 }

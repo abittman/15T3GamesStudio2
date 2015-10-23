@@ -7,7 +7,7 @@
 
 /id 2
 	/Matthew Thank you! Here's the watch, can you give it to the other person and try to explain the situation?
-	/me Sure
+	Sure
 	/exit
 
 /id 3
@@ -16,38 +16,34 @@
 
 /id 4
 	/Matthew Who... Who's there?
-	/options 2
 	/next 5, 6
 	Someone looking for something you have
 	That's not important, you've got something I need and I'm here to take it
 
 /id 5
 	/Matthew Please, help me and I'll give you anything you want
-	/me I'm looking for the watch you stole from the other person
 	/next 7
+	I'm looking for the watch you stole from the other person
 
 /id 6
 	/Matthew Please, help me and it's yours
-	/me I need the watch you stole
 	/next 8	
+	I need the watch you stole
 
 /id 7
 	/Matthew What? Please, anything but that. I gave that too my spouse, I don't know how that person had it
-	/options 2
 	/next 9, 10
 	Huh, funny story, they say that they we're given it by their spouse
 	I don't care, thats what I'm after
 
 /id 8
 	/Matthew Stole? You mean took back, I gave this to my spouse and somehow this person has it.
-	/options 2
 	/next 9, 10
 	Huh, funny story, they say that they we're given it by their spouse
 	I don't care, thats what I'm after
 
 /id 9
 	/Matthew What? how about this, you get me out, I'll give you this watch and you smooth things over with the other guy and mention this whole thing?
-	/options 2
 	/next 11, 11
 	Deal
 	Whatever…
@@ -65,7 +61,7 @@
 	/Matthew Thanks for getting me out. Have you returned the watch yet?
 	/exit
 	
-/quest 1
+/quest Free Matthew
 	/title Free Matthew
 	/description Free Matthew by hacking though the door's access panel. Maybe he'll give you the watch you need after.
 	/items Freedom 1

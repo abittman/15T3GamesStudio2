@@ -1,10 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
-using UnityEngine.Events;
 
 namespace AISystem {
 	public class Movement : MonoBehaviour {
-		public UnityEngine.Events.UnityEvent OnReachTarget;
+		public UnityEngine.Events.UnityEvent OnReachTarget = null;
 		public Vector3 MyMoveToPosition;
 		public Vector3 MyLookTowardsPosition;
 		public bool IsMoveTo = false;

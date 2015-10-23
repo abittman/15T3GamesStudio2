@@ -4,19 +4,16 @@
 	/first 9
 	
 /id 2
-	/checkquest
+	/checkquest 1
 	/next 39,8,3
 
 /id 3
 	/Steve How'd it go, did you get my watch?
-	/me Yeah, I've got it here
 	/next 4
-	
+	Yeah, I've got it here
 
 /id 4
-	/Steve THANK YOU! Here's the memory I promised.
-	Was their anything else?
-	/options 2
+	/Steve THANK YOU! Here's the memory I promised. Was their anything else?
 	/next 5, 6
 	Nope
 	Yeah, turns out that you and the person that stole the watch have a very familiar story. I think you should talk to them
@@ -25,22 +22,18 @@
 	/exit
 
 /id 6
-	/Steve What? Really? Wow...
-	I guess we do have some talking to do.
-	Thank you so much...
+	/Steve What? Really? Wow... I guess we do have some talking to do. Thank you so much...
 	/me No problem
-	/next 7	
 
 /id 7
 	/exit
 	
 /id 8
 	/Steve Did you get my watch back yet?
-	/exit	
+	/exit
 
 /id 9
 	/Steve What do you want?
-	/options 3
 	/next 10, 11, 12
 	I'm a friend of Mrs Johnson
 	Woah, calm down there buddy
@@ -48,14 +41,12 @@
 
 /id 10
 	/Steve Really? Well I'll tell you the same thing I told her, no deal, he's got nothing I want.
-	/options 2
 	/next 13, 14
 	I'm afraid that I can't accept that answer
 	I might have what you're looking for
 
 /id 11
 	/Steve Give me a reason to and maybe I will
-	/options 3
 	/next 15, 16, 17
 	Fair enough, I'm here representing Mrs Johnson
 	I was just looking to make a trade with you pal
@@ -63,49 +54,40 @@
 
 /id 12
 	/Steve Huh, direct, aren't you? Fine, I may have something you want, but the question is, do you have something I want?
-	/options 2
 	/next 18, 14
 	I can get you money
 	I might have what you're looking for
 
 /id 13
-	/NPC 2 I'm not sure you have much choice
-	*The NPC reveals a weapon*
-	/options 2
+	/NPC 2 I'm not sure you have much choice *The NPC reveals a weapon*
 	/next 19, 20
 	I think you might be right
 	There's always a choice
 
 /id 14
 	/Steve I doubt it
-	/options 2
 	/next 21, 22
 	Give me an idea of what you're looking for and we'll see what I've got
 	Guess I’ll be on my way
 
 /id 15
 	/Steve I said give me a reason to calm down, not want to walk away
-	/me Hey, give me a chance, I might have something she didn’t
 	/next 14
-	
+	Hey, give me a chance, I might have something she didn’t
 
 /id 16
 	/Steve I doubt you have what I'm looking for
-	/me You never know, I might
 	/next 14
-	
+	You never know, I might
 
 /id 17
-	/Steve You're right, but I'm not afraid for it to
-*the NPC reveals a weapon*
-	/options 2
+	/Steve You're right, but I'm not afraid for it to *the NPC reveals a weapon*
 	/next 23, 20
 	I can see that
 	Lets do this then
 
 /id 18
 	/Steve Money comes and goes, friend. I'm after something a bit more permanent
-	/options 3
 	/next 24, 25, 26
 	Memories?
 	More money?
@@ -121,7 +103,6 @@
 
 /id 21
 	/Steve I'm looking for my watch
-	/options 3
 	/next 27, 28, 29
 	A watch? That's it?
 	Expensive?
@@ -170,42 +151,33 @@
 	I don't have time to go on an errand run for you, just give me the memory
 
 /id 29
-	/Steve Great, this guy stole it when he asked for the time and ran off that way
-	*Points down alleyway*
-	Get it back for me and I'm sure we can do business
-	/me I'll be back as soon as I have your watch
+	/Steve Great, this guy stole it when he asked for the time and ran off that way *Points down alleyway*
 	/next 36
-	
+	I'll be back as soon as I have your watch Get it back for me and I'm sure we can do business
 
 /id 30
-	/Steve This guy came up and asked me the time, when I looked at my watch, he took it and ran off down that alley way
-	*Points down alley way*
-	/me I'll be back as soon as I have your watch
+	/Steve This guy came up and asked me the time, when I looked at my watch, he took it and ran off down that alley way *Points down alley way*
 	/next 36
-	
+	I'll be back as soon as I have your watch
 
-/id 31(23)
+/id 31
 	/Steve Not this...
-	/me What is it that you're after then?
 	/next 32
-	
+	What is it that you're after then?
 
 /id 32
 	/Steve My watch, it's all I have left of my spouse
-	/me Fair enough, any idea where it is?
 	/next 30
+	Fair enough, any idea where it is?
 	
-
 /id 33
-	/Steve Alright then
-	*The NPC reveals a weapons and attacks the player*
+	/Steve Alright then *The NPC reveals a weapons and attacks the player*
 	/exit
 
 /id 34
-	Steve My watch, my spouse gave it to me, its all I have left of them...
-	/me Fair enough, any idea where it is?
+	/Steve My watch, my spouse gave it to me, its all I have left of them...
 	/next 30
-	
+	Fair enough, any idea where it is?
 
 /id 35
 	/Steve Hey, calm down! I don't want this to get nasty
@@ -233,7 +205,7 @@
 	/exit
 
 /quest 1
-/title Get Steves Watch Back
-/description Someone ran down this alleyway with Steve's watch. Maybe if we get it back he'll trade us Mrs's Johnson's Memory.
-/items Steves_Watch 1
-/reward Mrs_Johnsons_Memory 1
+	/title Get Steves Watch Back
+	/description Someone ran down this alleyway with Steve's watch. Maybe if we get it back he'll trade us Mrs's Johnson's Memory.
+	/items Steves_Watch 1
+	/reward Mrs_Johnsons_Memory 1

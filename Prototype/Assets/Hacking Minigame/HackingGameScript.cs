@@ -121,7 +121,7 @@ public class HackingGameScript : MonoBehaviour
 				}
 				if (rightNumberRightPosition == 4) {
 					//Win. Send result, delete Canvas
-					thisDoor.gameWon();
+					//thisDoor.gameWon();
 					Debug.Log ("You win!");
 				} else {
 					PreviousGuessScript clone = Instantiate (guessRecord);
@@ -139,7 +139,7 @@ public class HackingGameScript : MonoBehaviour
 					refreshInputText ();
 					if (guessCount == 20) {
 						//Loss Send result, delete Canvas
-						thisDoor.gameLost();
+						//thisDoor.gameLost();
 						Debug.Log ("You have lost.");
 					}
 				}

@@ -7,23 +7,23 @@
 	/Seth Come back to me when you are older kid.
 	
 /id 3
-	/me gah..
+	gah..
 	/exit
 	
 /id 4 
-	/me Yo.
-	/checkquest 1
+	Yo.
+	/checkquest Get away from Seth!
 	/next 5, 8, 9
 
 /id 5 
 	/Seth Well done child. You have grown immensely.
 	
 /id 6
-	/me Umm...?
+	Umm...?
 	
 /id 7	
 	/Seth Well I have just the quest for  you now!
-	/givequest 1
+	/givequest Get away from Seth!
 	/exit
 
 /id 8	
@@ -34,6 +34,20 @@
 	/Seth Well done in escaping my wrath, child.
 	/exit
 	
-/quest 1
-	/title Get away from Seth!
+/quest Get away from Seth!
 	/description Seth has asked you to never talk to him again.
+	/zone SethZone
+	
+/item Seths Soul
+	/description It seems to be useless
+	/quantity 1
+	/value 5
+	/stats
+	sympathy 5
+	
+/item Seths Brain
+	/description The calculating power is a bit lacking.
+	/quantity 5
+	/value 2
+	/stats
+	stupidity 5
