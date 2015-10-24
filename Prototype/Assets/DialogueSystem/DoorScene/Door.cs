@@ -4,13 +4,15 @@ using System.Collections;
 // need to open the door differently depending on what side im on
 
 public class Door : MonoBehaviour {
-	public bool IsLocked = false;
-	public bool IsOpeningDoor = false;
-	public bool IsClosingDoor = false;
+	public UnityEngine.Events.UnityEvent OnOpenDoor = null;
+	public UnityEngine.Events.UnityEvent OnClickLockedDoor = null;
+	
+	private bool IsLocked = true;
+	private bool IsOpeningDoor = false;
+	private bool IsClosingDoor = false;
 	public float Speed = 75;
 	public Vector3 RotateAngle;
 	private float Direction;
-	//private float NewAngleY;
 	private Vector3 TargetAngle;
 	private Vector3 OldAngle = new Vector3(0,0,0);
 	public Vector3 RotationPoint = new Vector3(0.5f,0,0);
@@ -27,21 +29,24 @@ public class Door : MonoBehaviour {
 	private Vector3 Pivot;
 	private Vector3 OriginalPosition;
 	public bool IsForeverRotate = false;
-
+	
 	void Start() {
 		SoundSource = GetComponent<AudioSource>();
 		BeginAngle = transform.rotation.eulerAngles;
+		EndAngle += transform.rotation.eulerAngles;
 		OriginalPosition = transform.position;
-		Pivot = RotationPoint + OriginalPosition;
+		Pivot = (RotationPoint) + OriginalPosition;
+		RotationAxis = transform.InverseTransformDirection (RotationAxis);
+		RotationPoint = transform.InverseTransformDirection (RotationPoint);
 	}
-
+	
 	// Update is called once per frame
 	void Update () {
 		if ((IsOpeningDoor || IsClosingDoor)) {		
 			AnimateRotation();
 		}
 	}
-	public void AnimateRotation() {
+	private void AnimateRotation() {
 		Pivot = RotationPoint + OriginalPosition;
 		if (IsClosingDoor) {
 			TargetAngle = BeginAngle;
@@ -52,7 +57,7 @@ public class Door : MonoBehaviour {
 			OldAngle = BeginAngle;
 			Direction = EndDirection;
 		}
-
+		
 		// Rotate towards where we want to be - depending on time passed and direction going
 		transform.RotateAround (Pivot, RotationAxis, Time.deltaTime * Speed*Direction);
 		// our new angle we want to keep
@@ -62,9 +67,10 @@ public class Door : MonoBehaviour {
 		if (!(CurrentAngle.x  >= BeginAngle.x && CurrentAngle.x <= EndAngle.x 
 		      && CurrentAngle.y  >= BeginAngle.y && CurrentAngle.y <= EndAngle.y
 		      && CurrentAngle.z  >= BeginAngle.z && CurrentAngle.z <= EndAngle.z
-		      )) {
+		      )) 
+		{
 			if (!IsForeverRotate) {
-			// Once its passed the target angle, rotate it back the other way
+				// Once its passed the target angle, rotate it back the other way
 				transform.RotateAround (Pivot, RotationAxis, TargetAngle.x - CurrentAngle.x);
 				transform.RotateAround (Pivot, RotationAxis, TargetAngle.y - CurrentAngle.y);
 				transform.RotateAround (Pivot, RotationAxis, TargetAngle.z - CurrentAngle.z);
@@ -74,6 +80,7 @@ public class Door : MonoBehaviour {
 		}
 		//transform.position += MyPosition;
 	}
+	
 	public void ToggleDoor() {
 		if (!IsLocked) {
 			Debug.Log ("Toggling Door");
@@ -81,28 +88,39 @@ public class Door : MonoBehaviour {
 				CloseDoor ();
 			} else if (IsClosingDoor || LastState == 2) {
 				OpenDoor ();
+				if (OnOpenDoor != null)
+					OnOpenDoor.Invoke();
 			}
 		} else {
 			CloseDoor ();
+			if (OnClickLockedDoor != null)
+				OnClickLockedDoor.Invoke();
 		}
 	}
-
+	public void Lock() {
+		IsLocked = true;
+	}
+	public void Unlock() {
+		IsLocked = false;
+	}
 	public void OpenDoor() {
-		if (SoundSource  != null && OpeningSound != null)
-			SoundSource.PlayOneShot (OpeningSound, SoundVolume);
 		Debug.Log ("Opening Door");
 		//IsAnimating = true;
 		IsClosingDoor = false;
 		IsOpeningDoor = true;
 		LastState = 1;
+		if (SoundSource  != null && OpeningSound != null)
+			SoundSource.PlayOneShot (OpeningSound, SoundVolume);
 	}
+	
 	public void CloseDoor() {
-		if (SoundSource  != null && ClosingSound != null)
-			SoundSource.PlayOneShot (ClosingSound, SoundVolume);
 		Debug.Log ("Closing Door");
 		//IsAnimating = true;
 		IsClosingDoor = true;
 		IsOpeningDoor = false;
 		LastState = 2;
+		
+		if (SoundSource  != null && ClosingSound != null)
+			SoundSource.PlayOneShot (ClosingSound, SoundVolume);
 	}
 }

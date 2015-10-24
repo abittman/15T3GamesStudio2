@@ -3,30 +3,32 @@ using System.Collections;
 
 public class StartGame : MonoBehaviour {
 	public Canvas hackingMinigame;
+	public Door door;
 	Canvas clone;
-
-	// Use this for initialization
+	private bool hacking = false;
+	
 	void Start () {
 		hackingMinigame.GetComponent<Canvas> ();
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		if(Input.GetKey(KeyCode.J)){
-			startGame();
+
+	public void StartMinigame(){
+		if (!hacking) {
+			hacking = true;
+			clone = Instantiate (hackingMinigame);
+			clone.GetComponent<HackingGameScript>().sg = gameObject.GetComponent<StartGame>();
+			clone.transform.position = new Vector3 (0, 0, 0);
 		}
 	}
-
-	private void startGame(){
-			clone = Instantiate (hackingMinigame);
-		clone.transform.position = new Vector3 (0, 0, 0);
-	}
-	public void gameWon(){
-			clone = null;
+	public void MinigameWon(){
+			Destroy (clone.gameObject);
 			Debug.Log ("You Win!");
+			door.Unlock ();
+			hacking = false;
 	}
-	public void gameLost(){
-			clone = null;
+	public void MinigameLost(){
+			Destroy (clone.gameObject);
 			Debug.Log ("You have Lost.");
+			door.Lock ();
+			hacking = false;
 	}
 }

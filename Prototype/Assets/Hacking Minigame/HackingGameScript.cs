@@ -4,37 +4,38 @@ using System.Collections;
 
 public class HackingGameScript : MonoBehaviour
 {
+	int MAX_GUESSES = 20, CODE_LENGTH = 4;
 	int?[] code = new int?[4], hiddenCode = new int?[4];
 	Vector3[] position = new Vector3[20];
 	public Text text;
 	public PreviousGuessScript guessRecord;
 	public Transform parent;
 	string codeDisplayed;
-	int guessCount = 0;
-	int rightNumberRightPosition = 0, rightNumberWrongPosition = 0 ;
-	private Door thisDoor;
+	int guessCount = 0, rightNumberRightPosition = 0, rightNumberWrongPosition = 0 ;
+	public StartGame sg;
 	
 	void Start ()
 	{
+		Debug.Log ("Hacking Minigame Started");
 		parent.GetComponent<Transform> ();
 		guessRecord.GetComponent <GameObject> ();
 		int i = 0;
-		while (i<4) {
+		while (i<CODE_LENGTH) {
 			code [i] = null;
 			hiddenCode [i] = null;
 			i++;
 		}
-		fillPosition ();
-		generateHiddenCode ();
-
+		FillPosition ();
+		GenerateHiddenCode ();
+		sg.MinigameWon ();
 	}
 
-	private void generateHiddenCode ()
+	private void GenerateHiddenCode ()
 	{
-		for (int i=0; i<4; i++) {
+		for (int i=0; i<CODE_LENGTH; i++) {
 			while (true) {
 				int randNum = Random.Range (0, 9);
-				if (!checkForDuplicates (hiddenCode, randNum)) {
+				if (!CheckForDuplicates (hiddenCode, randNum)) {
 					hiddenCode [i] = randNum;
 					break;
 				}
@@ -42,10 +43,10 @@ public class HackingGameScript : MonoBehaviour
 		}
 	}
 
-	private void fillPosition ()
+	private void FillPosition ()
 	{
 		Vector3 v3 = new Vector3 (-100, 125, 0);
-		for (int i = 0; i<20; i++) {
+		for (int i = 0; i<MAX_GUESSES; i++) {
 			position [i] = v3;
 			if (i != 9) {
 				v3.y = v3.y + 35;
@@ -56,26 +57,27 @@ public class HackingGameScript : MonoBehaviour
 		}
 	}
 
-	public void numButtonPressed (int numPressed)
+	public void NumButtonPressed (int numPressed)
 	{
-		if (!checkForDuplicates (code, numPressed)) {
-			for (int i=0; i<4; i++) {
+		Debug.Log ("Button Pressed: " + numPressed);
+		if (!CheckForDuplicates (code, numPressed)) {
+			for (int i=0; i<CODE_LENGTH; i++) {
 				if (code [i] == null) {
 					code [i] = numPressed;
 					break;
-				} else if (i == 3) {
+				} else if (i == CODE_LENGTH-1) {
 					Debug.Log ("\nCode cannot add another letter");
 				}
 			}
 		} else {
 			Debug.Log ("\nCode cannot contain duplicates");
 		}
-		refreshInputText ();
+		RefreshInputText ();
 	}
 
-	private bool checkForDuplicates (int?[] array, int possibleDuplicate)
+	private bool CheckForDuplicates (int?[] array, int possibleDuplicate)
 	{
-		for (int i=0; i<4; i++) {
+		for (int i=0; i<CODE_LENGTH; i++) {
 			if (array [i] == possibleDuplicate) {
 				return true;
 			}
@@ -83,9 +85,9 @@ public class HackingGameScript : MonoBehaviour
 		return false;
 	}
 
-	public void backspaceButtonPressed ()
+	public void BackspaceButtonPressed ()
 	{
-		for (int i=0; i<4; i++) {
+		for (int i=0; i<CODE_LENGTH; i++) {
 			if (code [i] == null) {
 				if (i > 0) {
 					i--;
@@ -94,20 +96,20 @@ public class HackingGameScript : MonoBehaviour
 				break;
 			}
 		}
-		if (code [3] != null) {
-			code [3] = null;
+		if (code [CODE_LENGTH-1] != null) {
+			code [CODE_LENGTH-1] = null;
 		}
-		refreshInputText ();
+		RefreshInputText ();
 	}
 
-	public void enterButtonPressed ()
+	public void EnterButtonPressed ()
 	{
 		rightNumberRightPosition = 0;
 		rightNumberWrongPosition = 0;
-		if (code [3] != null) {
-			if (guessCount < 20) {
-				for (int i=0; i<4; i++) { //i hiddenCode, j code
-					for (int j=0; j<4; j++) { 
+		if (code [CODE_LENGTH-1] != null) {
+			if (guessCount < MAX_GUESSES) {
+				for (int i=0; i<CODE_LENGTH; i++) { //i hiddenCode, j code
+					for (int j=0; j<CODE_LENGTH; j++) { 
 						if (i == j) {
 							if (hiddenCode [i] == code [j]) {
 								rightNumberRightPosition++;
@@ -119,28 +121,24 @@ public class HackingGameScript : MonoBehaviour
 						}
 					}
 				}
-				if (rightNumberRightPosition == 4) {
-					//Win. Send result, delete Canvas
-					thisDoor.unlockDoor ();
-					Debug.Log ("You win!");
+				if (rightNumberRightPosition == CODE_LENGTH) {
+					GameWon();
 				} else {
 					PreviousGuessScript clone = Instantiate (guessRecord);
 					clone.transform.parent = parent;
 					clone.setPosition (position [guessCount]);
 					clone.setText (codeDisplayed);
-					clone.setLight1 (getColour ());
-					clone.setLight2 (getColour ());
-					clone.setLight3 (getColour ());
-					clone.setLight4 (getColour ());
+					clone.setLight1 (GetColour ());
+					clone.setLight2 (GetColour ());
+					clone.setLight3 (GetColour ());
+					clone.setLight4 (GetColour ());
 					guessCount++;
-					for (int i = 0; i<4; i++) {
+					for (int i = 0; i<CODE_LENGTH; i++) {
 						code [i] = null;
 					}
-					refreshInputText ();
-					if (guessCount == 20) {
-						//Loss Send result, delete Canvas
-						thisDoor.lockDoor ();
-						Debug.Log ("You have lost.");
+					RefreshInputText ();
+					if (guessCount == MAX_GUESSES) {
+						GameLost();
 					}
 				}
 			} else {
@@ -151,7 +149,7 @@ public class HackingGameScript : MonoBehaviour
 		}
 	}
 
-	private string getColour ()
+	private string GetColour ()
 	{
 		if (rightNumberRightPosition > 0) {
 			rightNumberRightPosition--;
@@ -163,11 +161,11 @@ public class HackingGameScript : MonoBehaviour
 		return "red";
 	}
 
-	private void writeCodeString ()
+	private void WriteCodeString ()
 	{
 		if (code [0] != null) {
 			codeDisplayed = "" + code [0];
-			for (int i=1; i<4; i++) {
+			for (int i=1; i<CODE_LENGTH; i++) {
 				if (code [i] != null) {
 					codeDisplayed = codeDisplayed + code [i];					
 				}
@@ -177,13 +175,17 @@ public class HackingGameScript : MonoBehaviour
 		}
 	}
 
-	private void refreshInputText ()
+	private void RefreshInputText ()
 	{
-		writeCodeString ();
+		WriteCodeString ();
 		text.text = codeDisplayed;
 	}
 
-	public void setDoor(Door door){
-		thisDoor = door;
+	private void GameWon(){
+		sg.MinigameWon ();
+	}
+
+	private void GameLost(){
+		sg.MinigameLost ();
 	}
 }
