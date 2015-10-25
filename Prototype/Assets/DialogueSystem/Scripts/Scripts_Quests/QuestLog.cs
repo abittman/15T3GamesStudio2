@@ -150,5 +150,17 @@ namespace DialogueSystem {
 			if (MyQuestLogGui)
 				MyQuestLogGui.CheckQuestCompletitions();
 		}
+
+		public bool DoesHaveQuest(string QuestName) {
+			Quest MyQuest = GetQuest (QuestName);
+			if (MyQuest == null) {
+				return false;
+			} else {
+				if (MyQuest.IsCompleted){
+					return false;
+				}
+				return true;
+			}
+		}
 	}
 }

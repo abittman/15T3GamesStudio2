@@ -16,7 +16,6 @@ public class HackingGameScript : MonoBehaviour
 	
 	void Start ()
 	{
-		Debug.Log ("Hacking Minigame Started");
 		parent.GetComponent<Transform> ();
 		guessRecord.GetComponent <GameObject> ();
 		int i = 0;
@@ -59,7 +58,6 @@ public class HackingGameScript : MonoBehaviour
 
 	public void NumButtonPressed (int numPressed)
 	{
-		Debug.Log ("Button Pressed: " + numPressed);
 		if (!CheckForDuplicates (code, numPressed)) {
 			for (int i=0; i<CODE_LENGTH; i++) {
 				if (code [i] == null) {
